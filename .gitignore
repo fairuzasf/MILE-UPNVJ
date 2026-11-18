@@ -1,24 +1,20 @@
-*.log
-.DS_Store
+# kredensial - WAJIB, jangan pernah dihapus dari daftar ini
 .env
 .env.backup
-.env.production
-.phpactor.json
-.phpunit.result.cache
-/.fleet
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
-/auth.json
-/node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
+# paket pihak ketiga - dipasang ulang dengan composer install
 /vendor
-Homestead.json
-Homestead.yaml
+/node_modules
+# berkas yang dihasilkan saat program berjalan
+/public/storage
+/public/build
+/storage/*.key
+/storage/logs/*.log
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+.phpunit.result.cache
+# berkas bawaan sistem operasi dan editor
+.DS_Store
 Thumbs.db
+/.idea
+/.vscode
