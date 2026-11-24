@@ -13,6 +13,12 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+        public function registrations() { return $this->hasMany(Registration::class); }
+        public function submissions()   { return $this->hasMany(Submission::class); }
+        public function isAdmin(): bool     { return $this->role === 'admin'; }
+        public function isDosen(): bool     { return $this->role === 'dosen'; }
+        public function isMahasiswa(): bool { return $this->role === 'mahasiswa'; }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,8 +26,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'nim',
         'email',
         'password',
+
     ];
 
     /**
@@ -46,4 +54,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
 }
