@@ -37,6 +37,12 @@ class User extends Authenticatable
     public function registrations() { return $this->hasMany(Registration::class); }
     public function submissions()   { return $this->hasMany(Submission::class); }
     public function permitLetters() { return $this->hasMany(PermitLetter::class); }
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'registrations')
+                    ->withPivot('status', 'reject_reason', 'attended')
+                    ->withTimestamps();
+    }
 
     public function isAdmin(): bool     { return $this->role === 'admin'; }
     public function isDosen(): bool     { return $this->role === 'dosen'; }

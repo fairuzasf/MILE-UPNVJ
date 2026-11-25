@@ -16,4 +16,10 @@ class Event extends Model
     public function registrations() { return $this->hasMany(Registration::class); }
     public function announcements() { return $this->hasMany(Announcement::class); }
     public function permitLetters() { return $this->hasMany(PermitLetter::class); }
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'registrations')
+                    ->withPivot('status', 'reject_reason', 'attended')
+                    ->withTimestamps();
+    }
 }

@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Deadline;
-use App\Models\Event;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,30 +17,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create(['name' => 'Admin MKWK', 'email' => 'admin@test.com', 'role' => 'admin']);
-        User::factory()->create(['name' => 'Dosen Uji', 'email' => 'dosen@test.com', 'role' => 'dosen']);
-        User::factory()->create(['name' => 'Mahasiswa Uji', 'email' => 'mhs@test.com', 'role' => 'mahasiswa']);
-
-        Event::create([
-            'title' => 'Seminar MPR (contoh)',
-            'type' => 'seminar_mpr',
-            'starts_at' => now()->addDays(14),
-            'registration_deadline' => now()->addDays(7),
-            'quota' => 50,
+        User::updateOrCreate(['email' => 'admin@test.com'], [
+            'name' => 'Admin MKWK', 'role' => 'admin', 'password' => Hash::make('password'),
+        ]);
+        User::updateOrCreate(['email' => 'dosen@test.com'], [
+            'name' => 'Dosen Uji', 'role' => 'dosen', 'password' => Hash::make('password'),
+        ]);
+        User::updateOrCreate(['email' => 'mhs@test.com'], [
+            'name' => 'Mahasiswa Uji', 'role' => 'mahasiswa', 'password' => Hash::make('password'),
         ]);
 
-        Event::create([
-            'title' => 'Bimbingan Teknis (contoh)',
-            'type' => 'bimtek',
-            'starts_at' => now()->addDays(21),
-            'registration_deadline' => now()->addDays(10),
-            'quota' => 30,
-        ]);
+        Deadline::updateOrCreate(
+            ['title' => 'Pengumpulan Proposal PJBL'],
+            ['type' => 'proposal', 'due_at' => now()->addDays(10)]
+        );
 
-        Deadline::create([
-            'title' => 'Pengumpulan Proposal PJBL',
-            'type' => 'proposal',
-            'due_at' => now()->addDays(10),
+        $this->call([
+            RegistrationSeeder::class,
         ]);
+            // anggota lain menambahkan seeder fiturnya sendiri di sini
     }
 }
