@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Submission extends Model
 {
+    protected $table = 'submissiosn';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
     protected $fillable = ['user_id', 'dosen_id', 'deadline_id', 
     'title', 'type', 'status', 'current_version', 'is_archived'];
 

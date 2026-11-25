@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    protected $table = 'events';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
+
     protected $fillable = ['title', 'description', 'type', 'starts_at', 'registration_deadline', 'quota', 'is_open'];
 
     protected function casts(): array
@@ -15,7 +19,7 @@ class Event extends Model
 
     public function registrations() { return $this->hasMany(Registration::class); }
     public function announcements() { return $this->hasMany(Announcement::class); }
-    public function permitLetters() { return $this->hasMany(PermitLetter::class); }
+    public function permitLetters() { return $this->hasMany(Letter::class); }
     public function users()
     {
         return $this->belongsToMany(User::class, 'registrations')

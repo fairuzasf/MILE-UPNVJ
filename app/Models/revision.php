@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Revision extends Model
 {
+    protected $table = 'revisions';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
     protected $fillable = ['submission_id', 'user_id', 'version_number', 'body'];
 
     public function submission() { return $this->belongsTo(Submission::class); }

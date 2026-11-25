@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Announcement extends Model
 {
+    protected $table = 'announcements';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
     protected $fillable = ['user_id', 'event_id', 'title', 'body'];
 
     public function author() { return $this->belongsTo(User::class, 'user_id'); }

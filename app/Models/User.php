@@ -11,6 +11,9 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+    protected $table = 'users';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
 
     protected $fillable = [
         'name',
@@ -36,13 +39,17 @@ class User extends Authenticatable
 
     public function registrations() { return $this->hasMany(Registration::class); }
     public function submissions()   { return $this->hasMany(Submission::class); }
-    public function permitLetters() { return $this->hasMany(PermitLetter::class); }
+    public function letter() { return $this->hasMany(letter::class); }
     public function events()
     {
         return $this->belongsToMany(Event::class, 'registrations')
                     ->withPivot('status', 'reject_reason', 'attended')
                     ->withTimestamps();
     }
+    public function announcements()        { return $this->hasMany(Announcement::class, 'user_id'); }
+    public function supervisedSubmissions() { return $this->hasMany(Submission::class, 'dosen_id'); }
+    public function revisions()            { return $this->hasMany(Revision::class); }
+    public function uploadedVersions()     { return $this->hasMany(SubmissionVersion::class, 'uploaded_by'); }
 
     public function isAdmin(): bool     { return $this->role === 'admin'; }
     public function isDosen(): bool     { return $this->role === 'dosen'; }

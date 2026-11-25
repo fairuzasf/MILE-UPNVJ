@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Deadline extends Model
 {
+    protected $table = 'deadlines';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
     protected $fillable = ['title', 'type', 'due_at', 'reminder_sent_at'];
 
     protected function casts(): array

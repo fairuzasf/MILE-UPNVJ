@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ReportArchive extends Model
 {
+    protected $table = 'report_archives';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
     protected $fillable = [
         'title',
         'description',
