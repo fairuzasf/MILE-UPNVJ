@@ -13,5 +13,17 @@ class Deadline extends Model
         return ['due_at' => 'datetime', 'reminder_sent_at' => 'datetime'];
     }
 
-    public function submissions() { return $this->hasMany(Submission::class); }
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }
+
+    public function usersWhoHaveNotSubmitted()
+    {
+        return User::where('role', 'mahasiswa')
+            ->whereDoesntHave('submissions', function ($q) {
+                $q->where('deadline_id', $this->id);
+            })
+            ->get();
+    }
 }
