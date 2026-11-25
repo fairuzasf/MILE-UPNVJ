@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title'); // mis. "Pengumpulan Proposal PJBL"
             $table->string('type');  // proposal | laporan_akhir | kegiatan
             $table->dateTime('due_at');
+            $table->timestamp('reminder_sent_at')->nullable(); // supaya email pengingat tidak terkirim dua kali
             $table->timestamps();
         });
     }

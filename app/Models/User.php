@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,40 +12,20 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-        public function registrations() { return $this->hasMany(Registration::class); }
-        public function submissions()   { return $this->hasMany(Submission::class); }
-        public function isAdmin(): bool     { return $this->role === 'admin'; }
-        public function isDosen(): bool     { return $this->role === 'dosen'; }
-        public function isMahasiswa(): bool { return $this->role === 'mahasiswa'; }
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'nim',
+        'prodi',
         'email',
         'password',
-
     ];
+    // 'role' sengaja tidak di fillable: diisi manual (login Google / seeder)
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -55,4 +34,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function registrations() { return $this->hasMany(Registration::class); }
+    public function submissions()   { return $this->hasMany(Submission::class); }
+    public function permitLetters() { return $this->hasMany(PermitLetter::class); }
+
+    public function isAdmin(): bool     { return $this->role === 'admin'; }
+    public function isDosen(): bool     { return $this->role === 'dosen'; }
+    public function isMahasiswa(): bool { return $this->role === 'mahasiswa'; }
 }

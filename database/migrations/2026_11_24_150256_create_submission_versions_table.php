@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedInteger('version_number');
             $table->string('file_path');
             $table->string('original_name');
+            $table->unsignedBigInteger('file_size')->nullable();
+            $table->foreignId('uploaded_by')->constrained('users')->cascadeOnDelete();
             $table->string('note')->nullable();
             $table->timestamps();
         });
